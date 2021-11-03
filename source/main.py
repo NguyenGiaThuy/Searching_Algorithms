@@ -4,6 +4,7 @@ import sys
 from multiprocessing import Process
 
 
+
 def func(path):
     m = maze.Maze()
     m.read_maze(path)
