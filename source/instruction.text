@@ -1,0 +1,16 @@
+1. Command format: python main.py <algo> <heu_func>
+   - <algo> - algorithm:
+       + dfs - depth first search
+       + bfs - breadth first search
+       + best - best first search
+       + A - A* search
+   - <heu_func> - heuristic function (for best and A only)
+       + manhattan - manhattan distance
+       + diagonal - diagonal distance
+       + euclidean - euclidean distance
+
+2. Sample command:
+   python main.py dfs
+   python main.py bfs
+   python main.py best euclidean
+   python main.py A diagonal
