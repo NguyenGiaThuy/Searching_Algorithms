@@ -1,7 +1,9 @@
 import os
 
 
+
 path = os.path.dirname(__file__).removesuffix('source')
+
 
 
 def draw_maze1():
