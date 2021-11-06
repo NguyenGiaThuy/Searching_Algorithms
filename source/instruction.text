@@ -14,3 +14,4 @@
    python main.py bfs
    python main.py best euclidean
    python main.py A diagonal
+   python main.py map (draw empty map)

@@ -1,6 +1,7 @@
 import os
 
 
+
 path = os.path.dirname(__file__).removesuffix('source')
 
 

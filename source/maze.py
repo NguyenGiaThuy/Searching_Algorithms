@@ -115,6 +115,7 @@ class Maze:
 
     def solve(self, algorithm, heuristic_function = None):
         #Select suitable data structure
+        frontier = None
         if algorithm == Algorithm.DEPTH_FIRST_SEARCH:
             frontier = util.Stack()
         else:
@@ -160,7 +161,7 @@ class Maze:
                     frontier.sort(heuristic_function)
 
 
-    def visualize(self, title = ""):
+    def visualize(self, title = ''):
         print(f'The height of the matrix: {len(self.matrix)}')
         print(f'The width of the matrix: {len(self.matrix[0])}')
         util.visualize_maze(self.matrix, self.bonus_points, self.start_coordinate, self.end_coordinate, self.route, self.visited_coordinates, title)
