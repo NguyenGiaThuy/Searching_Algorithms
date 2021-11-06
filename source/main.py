@@ -88,4 +88,7 @@ if __name__ == '__main__':
 #   python main.py bfs
 #   python main.py best euclidean
 #   python main.py A diagonal
+<<<<<<< HEAD
 #   python main.py map (draw empty map)
+=======
+>>>>>>> 3943dc653cc50350db37d8d6f3a231da0f6ec2fe

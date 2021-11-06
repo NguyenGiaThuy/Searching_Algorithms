@@ -5,6 +5,7 @@ import os
 path = os.path.dirname(__file__).removesuffix('source')
 
 
+
 def draw_maze1():
     filename = os.path.join(path, 'test/maze_map1.txt')
     with open(filename, 'w') as outfile:
