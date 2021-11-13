@@ -7,8 +7,7 @@ import enum
 class Algorithm(enum.Enum): 
     DEPTH_FIRST_SEARCH = 1
     BREADTH_FIRST_SEARCH = 2
-    BEST_FIRST_SEARCH = 3
-    A_STAR_SEARCH = 4
+    HEURISTIC = 3
 
 
 
@@ -153,13 +152,12 @@ class Maze:
                 #Add children to frontier
                 children = self.expand(current_node)
                 for child in children:
-                    if child.coordinate not in self.visited_coordinates:
-                            frontier.push(child)
+                    frontier.push(child)
                 
                 #Best first search or A* search
-                if algorithm == Algorithm.BEST_FIRST_SEARCH or algorithm == Algorithm.A_STAR_SEARCH:
+                if algorithm == Algorithm.HEURISTIC:
                     frontier.sort(heuristic_function)
-
+                
 
     def visualize(self, title = ''):
         print(f'The height of the matrix: {len(self.matrix)}')
@@ -167,7 +165,7 @@ class Maze:
         util.visualize_maze(self.matrix, self.bonus_points, self.start_coordinate, self.end_coordinate, self.route, self.visited_coordinates, title)
 
 
-    """For best first search"""
+    """Heuristic functions"""
     def manhattan_distance(self, node):
         f = abs(node.coordinate[0] - self.end_coordinate[0]) + abs(node.coordinate[1] - self.end_coordinate[1])
         return f
@@ -182,10 +180,8 @@ class Maze:
     def euclidean_distance(self, node):
         f =  sqrt(pow(node.coordinate[0] - self.end_coordinate[0], 2) + pow(node.coordinate[1] - self.end_coordinate[1], 2))   
         return f
-    """==================== """
 
 
-    """For A star search"""
     def manhattan_distance_A_star(self, node):
         f = abs(node.coordinate[0] - self.end_coordinate[0]) + abs(node.coordinate[1] - self.end_coordinate[1])
         g = node.move_cost
@@ -203,4 +199,9 @@ class Maze:
         f =  sqrt(pow(node.coordinate[0] - self.end_coordinate[0], 2) + pow(node.coordinate[1] - self.end_coordinate[1], 2))
         g = node.move_cost
         return f + g
-    """================="""
+
+
+    def dijkstra(self, node):
+        f = node.move_cost
+        return f
+    """==================="""

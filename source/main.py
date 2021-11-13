@@ -20,6 +20,7 @@ def func(path):
     figure_title['A manhattan'] = 'A* search - Manhattan distance'
     figure_title['A diagonal'] = 'A* search - Diagonal distance'
     figure_title['A euclidean'] = 'A* search - Euclidean distance'
+    figure_title['dijkstra'] = 'Dijkstra search'
 
     #Draw maze with route
     if sys.argv[1] != 'map':
@@ -29,8 +30,12 @@ def func(path):
         elif sys.argv[1] == 'bfs':
             algorithm = maze.Algorithm.BREADTH_FIRST_SEARCH
 
+        elif sys.argv[1] == 'dijkstra':
+            algorithm = maze.Algorithm.HEURISTIC
+            heuristic_function = m.dijkstra
+
         elif sys.argv[1] == 'best':
-            algorithm = maze.Algorithm.BEST_FIRST_SEARCH
+            algorithm = maze.Algorithm.HEURISTIC
             if sys.argv[2] == 'manhattan':
                 heuristic_function = m.manhattan_distance
             elif sys.argv[2] == 'euclidean':
@@ -39,7 +44,7 @@ def func(path):
                 heuristic_function = m.diagonal_distance
 
         elif sys.argv[1] == 'A':
-            algorithm = maze.Algorithm.A_STAR_SEARCH
+            algorithm = maze.Algorithm.HEURISTIC
             if sys.argv[2] == 'manhattan':
                 heuristic_function = m.manhattan_distance_A_star
             elif sys.argv[2] == 'diagonal':
@@ -66,6 +71,10 @@ if __name__ == '__main__':
     paths = []
     paths.append(draw.draw_maze1())
     paths.append(draw.draw_maze2())
+    paths.append(draw.draw_maze3())
+    paths.append(draw.draw_maze4())
+    paths.append(draw.draw_maze5())
+    paths.append(draw.draw_maze6())
 
     for path in paths:
         proc = Process(target = func, args = (path,))
@@ -76,12 +85,14 @@ if __name__ == '__main__':
 #   - <algo> - algorithm:
 #       + dfs - depth first search
 #       + bfs - breadth first search
+#       + dijkstra - Dijkstra search
 #       + best - best first search
 #       + A - A* search
 #   - <heu_func> - heuristic function (for best and A only)
 #       + manhattan - manhattan distance
 #       + diagonal - diagonal distance
 #       + euclidean - euclidean distance
+
 
 #2. Sample command:
 #   python main.py dfs
