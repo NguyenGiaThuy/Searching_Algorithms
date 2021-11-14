@@ -81,48 +81,48 @@ def read_file(file_name):
 
 class Stack:
     def __init__(self):
-        self.stack = []
+        self.items = []
     
 
     def peek(self):
-        return self.stack[-1]
+        return self.items[-1]
     
 
     def push(self, item):
-        self.stack.append(item)
+        self.items.append(item)
     
 
     def pop(self):
         if not self.empty():
-            self.stack.pop()
+            self.items.pop()
 
 
     def empty(self):
-        return len(self.stack) == 0
+        return len(self.items) == 0
 
 
 
 class Queue:
     def __init__(self):
-        self.queue = []
+        self.items = []
     
 
     def peek(self):
-        return self.queue[0]
+        return self.items[0]
     
 
     def push(self, item):
-        self.queue.append(item)
+        self.items.append(item)
     
 
     def pop(self):
         if not self.empty():
-            self.queue.pop(0)
+            self.items.pop(0)
 
 
     def empty(self):
-        return len(self.queue) == 0
+        return len(self.items) == 0
 
     
     def sort(self, criteria):
-        self.queue.sort(key = criteria)
+        self.items.sort(key = criteria)
