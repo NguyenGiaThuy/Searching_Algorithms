@@ -156,7 +156,7 @@ class Maze:
                 
                 #Best first search or A* search
                 if algorithm == Algorithm.HEURISTIC:
-                    frontier.sort(heuristic_function)
+                    frontier.sort(heuristic_function) #Act as an priority queue
                 
 
     def visualize(self, title = ''):
