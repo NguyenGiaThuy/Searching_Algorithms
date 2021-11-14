@@ -75,6 +75,8 @@ if __name__ == '__main__':
     paths.append(draw.draw_maze4())
     paths.append(draw.draw_maze5())
     paths.append(draw.draw_maze6())
+    paths.append(draw.draw_maze7())
+    paths.append(draw.draw_maze8())
 
     for path in paths:
         proc = Process(target = func, args = (path,))

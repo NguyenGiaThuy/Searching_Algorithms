@@ -153,3 +153,32 @@ def draw_maze7():
         outfile.write('xxxxxxxxxxxxxxxxxxxxxx')
     
     return filename
+
+
+def draw_maze8():
+    filename = os.path.join(path, 'test/maze_map8.txt')
+    with open(filename, 'w') as outfile:
+        outfile.write('10\n')
+        outfile.write('2 3 -9\n')
+        outfile.write('2 8 -7\n')
+        outfile.write('5 7 -1\n')
+        outfile.write('5 14 -6\n')
+        outfile.write('6 14 -2\n')
+        outfile.write('6 5 -2\n')
+        outfile.write('7 5 -1\n')
+        outfile.write('7 1 -3\n')
+        outfile.write('8 1 -4\n')
+        outfile.write('9 10 -10\n')
+        outfile.write('xxxxxxxxxxxxxxxxxxxxxx\n')
+        outfile.write('x   x   xx xx        x\n')
+        outfile.write('x  +  x +   xxxxxxxxxx\n')
+        outfile.write('x x    xx  xxxx xxx xx\n')
+        outfile.write('  x x x x xx   xxxx  x\n')
+        outfile.write('x   x  +   xx +xx  x x\n')
+        outfile.write('xx xx+xxxx    +xx  x x\n')
+        outfile.write('x+ xx+xxx  x x  xx   x\n')
+        outfile.write('x+         x x Sx x  x\n')
+        outfile.write('xxxxx x   +  x     x x\n')
+        outfile.write('xxxxxxxxxxxxxxxxxxxxxx')
+    
+    return filename
