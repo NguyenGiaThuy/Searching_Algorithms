@@ -131,3 +131,4 @@ dmypy.json
 # Custom
 /input
 /output
+.vscode
