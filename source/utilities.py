@@ -12,6 +12,11 @@ def visualize_maze(matrix, bonuses, waypoints, start, end, path = None, visited_
         4. route: The route from the starting point to the ending one, defined by an array of (x, y), e.g. route = [(1, 2), (1, 3), (1, 4)]
     """
 
+    figure_size = (len(matrix[0]), len(matrix))
+    legend_size = figure_size[0] * figure_size[1] / 2
+    figure_dpi = 300
+    font_size = 20
+
     #1. Define walls and array of direction based on the route
     walls = [(i, j) for i in range(len(matrix)) for j in range(len(matrix[0])) if matrix[i][j] == 'x']
 
@@ -30,12 +35,12 @@ def visualize_maze(matrix, bonuses, waypoints, start, end, path = None, visited_
         direction.pop(0)
 
     #2. Drawing the map
-    ax = plt.figure(dpi = 100).add_subplot(111)
+    ax = plt.figure(dpi = figure_dpi, figsize = figure_size).add_subplot(111)
 
     for i in ['top', 'bottom', 'right', 'left']:
         ax.spines[i].set_visible(False)
 
-    plt.scatter([i[1] for i in walls], [-i[0] for i in walls], marker = 'X', s = 100, color = 'black')
+    plt.scatter([i[1] for i in walls], [-i[0] for i in walls], marker = 'X', s = legend_size, color = 'black')
     
     for bonus in bonuses:
         bonus_color = 'blue'
@@ -43,19 +48,19 @@ def visualize_maze(matrix, bonuses, waypoints, start, end, path = None, visited_
             bonus_color = 'green'
         elif bonus[2] == -10:
             bonus_color = 'red'
-        plt.scatter(bonus[1], -bonus[0], marker = 'P', s = 100, color = bonus_color)
+        plt.scatter(bonus[1], -bonus[0], marker = 'P', s = legend_size, color = bonus_color)
 
     for waypoint in waypoints:
         index = chr(waypoint[4] + 48)
-        plt.text(waypoint[1], -waypoint[0], 'w' + index, color = 'teal', horizontalalignment = 'center', verticalalignment = 'center')
-        plt.text(waypoint[3], -waypoint[2], 'w' + index, color = 'teal', horizontalalignment = 'center', verticalalignment = 'center')
+        plt.text(waypoint[1], -waypoint[0], 'w' + index, color = 'teal', horizontalalignment = 'center', verticalalignment = 'center', size = font_size)
+        plt.text(waypoint[3], -waypoint[2], 'w' + index, color = 'teal', horizontalalignment = 'center', verticalalignment = 'center', size = font_size)
 
-    plt.scatter(start[1], -start[0], marker = '*', s = 100, color = 'gold')
+    plt.scatter(start[1], -start[0], marker = '*', s = legend_size, color = 'gold')
 
     if visited_coordinates:
         for i in range(len(visited_coordinates)):
             if visited_coordinates[i] not in path:
-                plt.scatter(visited_coordinates[i][1], -visited_coordinates[i][0], marker = '*', color = 'silver')
+                plt.scatter(visited_coordinates[i][1], -visited_coordinates[i][0], marker = '*', color = 'silver', s = legend_size)
 
     if path:
         for i in range(len(path) - 2):
@@ -71,13 +76,13 @@ def visualize_maze(matrix, bonuses, waypoints, start, end, path = None, visited_
                     break
             
             if not is_overlapped:
-                plt.scatter(path[i + 1][1], -path[i + 1][0], marker = direction[i], color = 'silver')
+                plt.scatter(path[i + 1][1], -path[i + 1][0], marker = direction[i], color = 'silver', s = legend_size)
 
     if end != None:
-        plt.text(end[1], -end[0], 'EXIT', color = 'red', horizontalalignment = 'center', verticalalignment = 'center')
+        plt.text(end[1], -end[0], 'EXIT', color = 'red', horizontalalignment = 'center', verticalalignment = 'center', size = font_size)
     plt.xticks([])
     plt.yticks([])
-    plt.suptitle(file_name)
+    plt.suptitle(file_name, size = font_size)
 
     file_name = file_name.split(' ', 1)[0] if ' ' in file_name else file_name
     directory = os.path.dirname(__file__)
@@ -85,9 +90,9 @@ def visualize_maze(matrix, bonuses, waypoints, start, end, path = None, visited_
     directory = os.path.join(directory, 'output/' + sub_directory)
     if not os.path.exists(directory):
         os.makedirs(directory)
-    figure_file_name = os.path.join(directory, file_name  + '.jpg')
+    figure_file_name = os.path.join(directory, file_name + '.jpg')
     path_cost_file_name = os.path.join(directory, file_name  + '.txt')
-    plt.savefig(figure_file_name)
+    plt.savefig(figure_file_name, format = 'jpg', dpi = figure_dpi)
     write_path_cost(path_cost_file_name, path)
 
     print(f'Starting point (x, y) = {start[0], start[1]}')
@@ -104,6 +109,7 @@ def write_path_cost(file_name, path):
     path_length = len(path) - 1 if len(path) > 0 else 'NO'
     with open(file_name, 'w') as outfile:
         outfile.write(str(path_length))
+    outfile.close()
     return file_name
     
 

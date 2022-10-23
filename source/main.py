@@ -1,5 +1,5 @@
 import draw_maze as draw
-import maze as maze
+import maze
 import sys
 
 

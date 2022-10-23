@@ -3,10 +3,12 @@ import utilities as util
 
 
 
+auto_generated = False
 directory = os.path.dirname(__file__)
 directory = util.remove_suffix(directory, 'source')
 directory = os.path.join(directory, 'input/')
 if not os.path.exists(directory):
+    auto_generated = True
     os.makedirs(directory)
 
 lvl1_directory = os.path.join(directory, 'level_1/')
@@ -25,82 +27,75 @@ if not os.path.exists(advanced_directory):
 
 def draw_level1_maze1():
     file_name = os.path.join(lvl1_directory, 'input_1.txt')
-    if not os.path.exists(file_name):
+    if auto_generated:
         with open(file_name, 'w') as outfile:
             outfile.write('0\n')
-            outfile.write('xxxxxxxxxxxxxxxxxxxxxx\n')
-            outfile.write('x   x   xx xx        x\n')
-            outfile.write('x     x     xxxxxxxxxx\n')
-            outfile.write('x x    xx  xxxx xxx xx\n')
-            outfile.write('x xxx   x xx   xxxx  x\n')
-            outfile.write('x    x     x   xxxx  x\n')
-            outfile.write('x x        xx  xx  x x\n')
-            outfile.write('xxxxxxx x      xx  x x\n')
-            outfile.write('xxxxxxxxx  x x  xx   x\n')
-            outfile.write('x          x x Sx x  x\n')
-            outfile.write('xxxxx x  x x x     x x\n')
-            outfile.write('xxxxxxxxxxxxxxxxxxxxxx')
+            outfile.write('xxxxxxxxxxxx\n')
+            outfile.write('xS         x\n')
+            outfile.write('x          x\n')
+            outfile.write('x          x\n')
+            outfile.write('x          x\n')
+            outfile.write('x          x\n')
+            outfile.write('x          x\n')
+            outfile.write('x           \n')
+            outfile.write('xxxxxxxxxxxx')
+        outfile.close()
     return file_name
 
 def draw_level1_maze2():
     file_name = os.path.join(lvl1_directory, 'input_2.txt')
-    if not os.path.exists(file_name):
+    if auto_generated:
         with open(file_name, 'w') as outfile:
             outfile.write('0\n')
-            outfile.write('xxxxxxxxxxxxx\n')
-            outfile.write('xS         xx\n')
-            outfile.write('x xxxxxxxx+xx\n')
-            outfile.write('x x        xx\n')
-            outfile.write('x x xxxxxxxxx\n')
-            outfile.write('x            \n')
-            outfile.write('x xxxxxxxxxxx\n')
-            outfile.write('x      xxxxxx\n')
-            outfile.write('xxxxxxxxxxxxx')
+            outfile.write('xxxxxxxxxxxx\n')
+            outfile.write('xS         x\n')
+            outfile.write('x          x\n')
+            outfile.write('x          x\n')
+            outfile.write('x          x\n')
+            outfile.write('x          x\n')
+            outfile.write('x          x\n')
+            outfile.write('           x\n')
+            outfile.write('xxxxxxxxxxxx')
+        outfile.close()
     return file_name
 
 def draw_level1_maze3():
     file_name = os.path.join(lvl1_directory, 'input_3.txt')
-    if not os.path.exists(file_name):
+    if auto_generated:
         with open(file_name, 'w') as outfile:
             outfile.write('0\n')
-            outfile.write('xxxxxxxxxxxxx\n')
-            outfile.write('       x xxxx\n')
-            outfile.write('x x x x  xxxx\n')
-            outfile.write('x x   x   xxx\n')
-            outfile.write('x x     x xxx\n')
-            outfile.write('x x x x xxxxx\n')
-            outfile.write('x x x   S xxx\n')
-            outfile.write('x xxxxxxx xxx\n')
-            outfile.write('x         xxx\n')
-            outfile.write('xxxxxxxxxxxxx')
+            outfile.write('xxxxxxxxxxxx\n')
+            outfile.write('xS         x\n')
+            outfile.write('x          x\n')
+            outfile.write('x          x\n')
+            outfile.write('x          x\n')
+            outfile.write('x          x\n')
+            outfile.write('x          x\n')
+            outfile.write('x          x\n')
+            outfile.write('xxxxxxxxxxxx')
+        outfile.close()
     return file_name
 
 def draw_level1_maze4():
     file_name = os.path.join(lvl1_directory, 'input_4.txt')
-    if not os.path.exists(file_name):
+    if auto_generated:
         with open(file_name, 'w') as outfile:
             outfile.write('0\n')
-            outfile.write('xxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxx\n')
-            outfile.write('xxxxxxxx x xxxxxxxxxxx xxxxxxxxxxx xx\n')
-            outfile.write('x        x    xxxxxxxx xxxxxxxxxxx xx\n')
-            outfile.write('x xxxxxx xxxx              xxx     xx\n')
-            outfile.write('x xxxxxx xxxx xxxxxx xxx xxxxx xxxxxx\n')
-            outfile.write('x x           xxxxxx xxx  xxxx xxxxxx\n')
-            outfile.write('x x xxxxxxxxx xxx     xx xxx    xxxxx\n')
-            outfile.write('x x xxxxxxxxx xxx xxx xx xxx xxxxxxxx\n')
-            outfile.write('x xxxxx           xxx               x\n')
-            outfile.write('x xxx xxxxx xxxxx     xxxxxx xxxxxxxx\n')
-            outfile.write('x xxx xxxxx xxxxxxxx xxxxxxx xxx xxxx\n')
-            outfile.write('x xxx xxxxx        x    S xx        x\n')
-            outfile.write('x           xxxxx xxxxxxx xx x xxx xx\n')
-            outfile.write('x x xxxxxxxxxxxxx         xxxx xx  xx\n')
-            outfile.write('x   xxxxxxxxxxxxxxxxxxxxxxxxxx xxx xx\n')
-            outfile.write('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx')
+            outfile.write('xxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n')
+            outfile.write('x                                    x         x x\n')
+            outfile.write('x              xxxxxxxxxxxxx  xxxxx  x    x    x x\n')
+            outfile.write('xxxxxxxx xxxxxxx                    x     x   x  x\n')
+            outfile.write('x    x     x   x xxxxxxxxxxxxx      x    x    x  x\n')
+            outfile.write('x       x      x             x     x     x   x   x\n')
+            outfile.write('x xxxxxxxxxxxxxx             xxxxxxx    x    x   x\n')
+            outfile.write('x                                       x       Sx\n')
+            outfile.write('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx')
+        outfile.close()
     return file_name
 
 def draw_level1_maze5():
     file_name = os.path.join(lvl1_directory, 'input_5.txt')
-    if not os.path.exists(file_name):
+    if auto_generated:
         with open(file_name, 'w') as outfile:
             outfile.write('0\n')
             outfile.write('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxx\n')
@@ -120,11 +115,12 @@ def draw_level1_maze5():
             outfile.write('xxx     xxx     xxx          xxxxxxxx\n')
             outfile.write('xxxxxxxxxxx xxxxxxxxxxxxxx        xxx\n')
             outfile.write('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx')
+        outfile.close()
     return file_name
 
 def draw_level2_maze1():
     file_name = os.path.join(lvl2_directory, 'input_1.txt')
-    if not os.path.exists(file_name):
+    if auto_generated:
         with open(file_name, 'w') as outfile:
             outfile.write('2\n')
             outfile.write('4 5 -2\n')
@@ -140,11 +136,12 @@ def draw_level2_maze1():
             outfile.write('x          x x Sx x  x\n')
             outfile.write('xxxxx x  x x x     x x\n')
             outfile.write('xxxxxxxxxxxxxxxxxxxxxx')
+        outfile.close()
     return file_name
 
 def draw_level2_maze2():
     file_name = os.path.join(lvl2_directory, 'input_2.txt')
-    if not os.path.exists(file_name):
+    if auto_generated:
         with open(file_name, 'w') as outfile:
             outfile.write('5\n')
             outfile.write('5 14 -4\n')
@@ -163,11 +160,12 @@ def draw_level2_maze2():
             outfile.write('x+         x x Sx x  x\n')
             outfile.write('xxxxx x  x x x     x x\n')
             outfile.write('xxxxxxxxxxxxxxxxxxxxxx')
+        outfile.close()
     return file_name
 
 def draw_level2_maze3():
     file_name = os.path.join(lvl2_directory, 'input_3.txt')
-    if not os.path.exists(file_name):
+    if auto_generated:
         with open(file_name, 'w') as outfile:
             outfile.write('10\n')
             outfile.write('2 3 -9\n')
@@ -191,11 +189,12 @@ def draw_level2_maze3():
             outfile.write('x+         x x Sx x  x\n')
             outfile.write('xxxxx x   +  x     x x\n')
             outfile.write('xxxxxxxxxxxxxxxxxxxxxx')
+        outfile.close()
     return file_name
 
 def draw_advanced_maze1():
     file_name = os.path.join(advanced_directory, 'input_1.txt')
-    if not os.path.exists(file_name):
+    if auto_generated:
         with open(file_name, 'w') as outfile:
             outfile.write('4\n')
             outfile.write('3 1 -5\n')
@@ -208,11 +207,12 @@ def draw_advanced_maze1():
             outfile.write('x                    x\n')
             outfile.write('x                     \n')
             outfile.write('xxxxxxxxxxxxxxxxxxxxxx')
+        outfile.close()
     return file_name
 
 def draw_advanced_maze2():
     file_name = os.path.join(advanced_directory, 'input_2.txt')
-    if not os.path.exists(file_name):
+    if auto_generated:
         with open(file_name, 'w') as outfile:
             outfile.write('2\n')
             outfile.write('3 1 -5\n')
@@ -225,4 +225,5 @@ def draw_advanced_maze2():
             outfile.write('x                    x\n')
             outfile.write('x                     \n')
             outfile.write('xxxxxxxxxxxxxxxxxxxxxx')
+        outfile.close()
     return file_name
