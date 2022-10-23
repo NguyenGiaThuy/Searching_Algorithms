@@ -1,18 +1,31 @@
-1. Command format: python main.py <algo> <heu_func>
-   - <algo> - algorithm:
-       + dfs - depth first search
-       + bfs - breadth first search
-       + dijkstra - Dijkstra search
-       + best - best first search
-       + A - A* search
-   - <heu_func> - heuristic function (for best and A only)
-       + manhattan - manhattan distance
-       + diagonal - diagonal distance
-       + euclidean - euclidean distance
+1. Command format: python main.py <algo/heu> <heu_func>
+   - <algo/heu> - algorithm/heuristic:
+       + dfs                   Depth first search
+       + bfs                   Breadth first search
+       + ucs                   Uniform-cost search
+       + gbfs                  Greedy best first search
+       + astar                 A* search
+       + algo1                 Bonus-oriented search
+   - <heu_func> - heuristic function (for heuristic only)
+       + manhattan             Manhattan distance heuristic
+       + euclidean             Euclidean distance heuristic
+       + bad                   Bad distance estimation heuristic
+     
        
 2. Sample command:
    python main.py dfs
    python main.py bfs
-   python main.py best euclidean
-   python main.py A diagonal
+   python main.py gbfs euclidean
+   python main.py astar bad
    python main.py map (draw empty map)
+
+
+3. Map legends:
+        + x                     Wall
+        + Golden star           Start
+        + Silver Start          Frontier
+        + Arrow                 Path
+        + Blue cross            2-point
+        + Green cross           5-point
+        + Red cross             10-point
+        + w1, w2, w...          waypoint                                

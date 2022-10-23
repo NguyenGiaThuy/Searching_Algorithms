@@ -1,12 +1,13 @@
 import matplotlib.pyplot as plt
+import os
 
 
 
-def visualize_maze(matrix, bonus, start, end, route = None, visited_coordinates = None, title = ""):
+def visualize_maze(matrix, bonuses, waypoints, start, end, path = None, visited_coordinates = None, sub_directory = '', file_name = ''):
     """
     Args:
         1. matrix: The matrix read from the input file,
-        2. bonus: The array of bonus points,
+        2. bonuses: The array of bonus points,
         3. start, end: The starting and ending points,
         4. route: The route from the starting point to the ending one, defined by an array of (x, y), e.g. route = [(1, 2), (1, 3), (1, 4)]
     """
@@ -14,16 +15,16 @@ def visualize_maze(matrix, bonus, start, end, route = None, visited_coordinates 
     #1. Define walls and array of direction based on the route
     walls = [(i, j) for i in range(len(matrix)) for j in range(len(matrix[0])) if matrix[i][j] == 'x']
 
-    if route:
+    if path:
         direction = []
-        for i in range(1, len(route)):
-                if route[i][0] - route[i - 1][0] > 0:
+        for i in range(1, len(path)):
+                if path[i][0] - path[i - 1][0] > 0:
                     direction.append('v') #v
-                elif route[i][0] - route[i - 1][0] < 0:
+                elif path[i][0] - path[i - 1][0] < 0:
                     direction.append('^') #^        
-                elif route[i][1] - route[i - 1][1] > 0:
+                elif path[i][1] - path[i - 1][1] > 0:
                     direction.append('>') #>
-                else:
+                elif path[i][1] - path[i - 1][1] < 0:
                     direction.append('<') #<
 
         direction.pop(0)
@@ -36,69 +37,107 @@ def visualize_maze(matrix, bonus, start, end, route = None, visited_coordinates 
 
     plt.scatter([i[1] for i in walls], [-i[0] for i in walls], marker = 'X', s = 100, color = 'black')
     
-    plt.scatter([i[1] for i in bonus], [-i[0] for i in bonus], marker = 'P', s = 100, color = 'green')
+    for bonus in bonuses:
+        bonus_color = 'blue'
+        if bonus[2] == -5:
+            bonus_color = 'green'
+        elif bonus[2] == -10:
+            bonus_color = 'red'
+        plt.scatter(bonus[1], -bonus[0], marker = 'P', s = 100, color = bonus_color)
+
+    for waypoint in waypoints:
+        index = chr(waypoint[4] + 48)
+        plt.text(waypoint[1], -waypoint[0], 'w' + index, color = 'teal', horizontalalignment = 'center', verticalalignment = 'center')
+        plt.text(waypoint[3], -waypoint[2], 'w' + index, color = 'teal', horizontalalignment = 'center', verticalalignment = 'center')
 
     plt.scatter(start[1], -start[0], marker = '*', s = 100, color = 'gold')
 
     if visited_coordinates:
         for i in range(len(visited_coordinates)):
-            if visited_coordinates[i] not in route:
+            if visited_coordinates[i] not in path:
                 plt.scatter(visited_coordinates[i][1], -visited_coordinates[i][0], marker = '*', color = 'silver')
 
-    if route:
-        for i in range(len(route) - 2):
-            plt.scatter(route[i + 1][1], -route[i + 1][0], marker = direction[i], color = 'silver')
+    if path:
+        for i in range(len(path) - 2):
+            is_overlapped = False
+            for bonus in bonuses:
+                if path[i + 1][0] == bonus[0] and path[i + 1][1] == bonus[1]:
+                    is_overlapped = True
+                    break
+            
+            for waypoint in waypoints:
+                if (path[i + 1][0] == waypoint[0] and path[i + 1][1] == waypoint[1]) or (path[i + 1][0] == waypoint[2] and path[i + 1][1] == waypoint[3]):
+                    is_overlapped = True
+                    break
+            
+            if not is_overlapped:
+                plt.scatter(path[i + 1][1], -path[i + 1][0], marker = direction[i], color = 'silver')
 
-    plt.text(end[1], -end[0], 'EXIT', color = 'red', horizontalalignment = 'center', verticalalignment = 'center')
+    if end != None:
+        plt.text(end[1], -end[0], 'EXIT', color = 'red', horizontalalignment = 'center', verticalalignment = 'center')
     plt.xticks([])
     plt.yticks([])
-    plt.suptitle(title)
-    plt.show()
+    plt.suptitle(file_name)
+
+    file_name = file_name.split(' ', 1)[0] if ' ' in file_name else file_name
+    directory = os.path.dirname(__file__)
+    directory = remove_suffix(directory, 'source')
+    directory = os.path.join(directory, 'output/' + sub_directory)
+    if not os.path.exists(directory):
+        os.makedirs(directory)
+    figure_file_name = os.path.join(directory, file_name  + '.jpg')
+    path_cost_file_name = os.path.join(directory, file_name  + '.txt')
+    plt.savefig(figure_file_name)
+    write_path_cost(path_cost_file_name, path)
 
     print(f'Starting point (x, y) = {start[0], start[1]}')
-    print(f'Ending point (x, y) = {end[0], end[1]}')
+
+    if end != None:
+        print(f'Ending point (x, y) = {end[0], end[1]}')
     
-    for _, point in enumerate(bonus):
+    for _, point in enumerate(bonuses):
         print(f'Bonus point at position (x, y) = {point[0], point[1]} with point {point[2]}')
+
+
+
+def write_path_cost(file_name, path):
+    path_length = len(path) - 1 if len(path) > 0 else 'NO'
+    with open(file_name, 'w') as outfile:
+        outfile.write(str(path_length))
+    return file_name
     
 
 
 def read_file(file_name):
-    f = open(file_name, 'r')
-    n_bonus_points = int(next(f)[:-1])
-    bonus_points = []
-    for i in range(n_bonus_points):
-        x, y, reward = map(int, next(f)[:-1].split(' '))
-        bonus_points.append((x, y, reward))
+    file = open(file_name, 'r')
 
-    text = f.read()
+    # Extraction bonuses
+    bonuses = []
+    bonuses_count = int(next(file)[:-1])
+    for i in range(bonuses_count):
+        x, y, reward = map(int, next(file)[:-1].split(' '))
+        bonuses.append((x, y, reward))
+    
+    # Extraction waypoints (if available)
+    waypoints = []
+    if 'advance' in file_name:
+        waypoints_count = int(next(file)[:-1]) 
+        for i in range(waypoints_count):
+            in_x, in_y, out_x, out_y, legend = map(int, next(file)[:-1].split(' '))
+            waypoints.append((in_x, in_y, out_x, out_y, legend))
+
+    text = file.read()
     matrix = [list(i) for i in text.splitlines()]
-    f.close()
+    file.close()
 
-    return bonus_points, matrix
-
-
-
-class Stack:
-    def __init__(self):
-        self.items = []
-    
-
-    def peek(self):
-        return self.items[-1]
-    
-
-    def push(self, item):
-        self.items.append(item)
-    
-
-    def pop(self):
-        if not self.empty():
-            self.items.pop()
+    return matrix, bonuses, waypoints
 
 
-    def empty(self):
-        return len(self.items) == 0
+
+def remove_suffix(input_string, suffix):
+    if suffix and input_string.endswith(suffix):
+        return input_string[:-len(suffix)]
+    return input_string
 
 
 

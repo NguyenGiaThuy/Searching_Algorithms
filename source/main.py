@@ -1,26 +1,16 @@
 import draw_maze as draw
 import maze as maze
 import sys
-from multiprocessing import Process
 
 
 
-def func(path):
+def func(directory):
     m = maze.Maze()
-    m.read_maze(path)
+    m.read_maze(directory)
 
     algorithm = None
+    heuristic = None
     heuristic_function = None
-    figure_title = {}
-    figure_title['dfs'] = 'Depth first search'
-    figure_title['bfs'] = 'Breath first search'
-    figure_title['best manhattan'] = 'Greedy best first search - Manhattan distance'
-    figure_title['best diagonal'] = 'Greedy best first search - Diagonal distance'
-    figure_title['best euclidean'] = 'Greedy best first search - Euclidean distance'
-    figure_title['A manhattan'] = 'A* search - Manhattan distance'
-    figure_title['A diagonal'] = 'A* search - Diagonal distance'
-    figure_title['A euclidean'] = 'A* search - Euclidean distance'
-    figure_title['dijkstra'] = 'Dijkstra search'
 
     #Draw maze with route
     if sys.argv[1] != 'map':
@@ -30,35 +20,40 @@ def func(path):
         elif sys.argv[1] == 'bfs':
             algorithm = maze.Algorithm.BREADTH_FIRST_SEARCH
 
-        elif sys.argv[1] == 'dijkstra':
-            algorithm = maze.Algorithm.HEURISTIC
-            heuristic_function = m.dijkstra
+        elif sys.argv[1] == 'ucs':
+            algorithm = maze.Algorithm.UNIFORM_COST_SEARCH
 
-        elif sys.argv[1] == 'best':
-            algorithm = maze.Algorithm.HEURISTIC
+        elif sys.argv[1] == 'gbfs':
+            heuristic = maze.Heuristic.GREEDY_BEST_FIRST_SEARCH
             if sys.argv[2] == 'manhattan':
-                heuristic_function = m.manhattan_distance
+                heuristic_function = m.manhattan_heuristic
             elif sys.argv[2] == 'euclidean':
-                heuristic_function = m.euclidean_distance
-            elif sys.argv[2] == 'diagonal':
-                heuristic_function = m.diagonal_distance
+                heuristic_function = m.euclidean_heuristic
+            elif sys.argv[2] == 'bad':
+                heuristic_function = m.bad_heuristic
 
-        elif sys.argv[1] == 'A':
-            algorithm = maze.Algorithm.HEURISTIC
+        elif sys.argv[1] == 'astar':
+            heuristic = maze.Heuristic.A_STAR_SEARCH
             if sys.argv[2] == 'manhattan':
-                heuristic_function = m.manhattan_distance_A_star
-            elif sys.argv[2] == 'diagonal':
-                heuristic_function = m.diagonal_distance_A_star
+                heuristic_function = m.manhattan_heuristic
             elif sys.argv[2] == 'euclidean':
-                heuristic_function = m.euclidean_distance_A_star
+                heuristic_function = m.euclidean_heuristic
+            elif sys.argv[2] == 'bad':
+                heuristic_function = m.bad_heuristic
 
-        m.solve(algorithm, heuristic_function)
+        elif sys.argv[1] == 'algo1':
+            heuristic = maze.Heuristic.BONUS_ORIENTED_SEARCH
+            heuristic_function = m.bonus_oriented_heuristic
 
-        str = sys.argv[1]
+        m.solve(algorithm, heuristic, heuristic_function)
+
+        file_name = sys.argv[1]
         if len(sys.argv) == 3:
-            str += ' ' + sys.argv[2]
+            file_name += ' ' + sys.argv[2]
 
-        m.visualize(figure_title[str])
+        sub_directory = directory.split('/', 1)[1]
+        sub_directory = sub_directory.split('.', 1)[0]
+        m.visualize(sub_directory, file_name)
 
     #Draw empty maze
     else:
@@ -66,39 +61,41 @@ def func(path):
 
     
 
-
 if __name__ == '__main__':
-    paths = []
-    paths.append(draw.draw_maze1())
-    paths.append(draw.draw_maze2())
-    paths.append(draw.draw_maze3())
-    paths.append(draw.draw_maze4())
-    paths.append(draw.draw_maze5())
-    paths.append(draw.draw_maze6())
-    paths.append(draw.draw_maze7())
-    paths.append(draw.draw_maze8())
+    directories = []
+    directories.append(draw.draw_level1_maze1())
+    directories.append(draw.draw_level1_maze2())
+    directories.append(draw.draw_level1_maze3())
+    directories.append(draw.draw_level1_maze4())
+    directories.append(draw.draw_level1_maze5())
+    directories.append(draw.draw_level2_maze1())
+    directories.append(draw.draw_level2_maze2())
+    directories.append(draw.draw_level2_maze3())
+    directories.append(draw.draw_advanced_maze1())
+    directories.append(draw.draw_advanced_maze2())
 
-    for path in paths:
-        proc = Process(target = func, args = (path,))
-        proc.start()
+    for directory in directories:
+        func(directory)
+
+
     
-    
-#1. Command format: python main.py <algo> <heu_func>
-#   - <algo> - algorithm:
-#       + dfs - depth first search
-#       + bfs - breadth first search
-#       + dijkstra - Dijkstra search
-#       + best - best first search
-#       + A - A* search
-#   - <heu_func> - heuristic function (for best and A only)
-#       + manhattan - manhattan distance
-#       + diagonal - diagonal distance
-#       + euclidean - euclidean distance
+#1. Command format: python main.py <algo/heu> <heu_func>
+#   - <algo/heu> - algorithm/heuristic:
+#       + dfs                   Depth first search
+#       + bfs                   Breadth first search
+#       + ucs                   Uniform-cost search
+#       + gbfs                  Greedy best first search
+#       + astar                 A* search
+#       + algo1                 Bonus-oriented search
+#   - <heu_func> - heuristic function (for heuristic only)
+#       + manhattan             Manhattan distance heuristic
+#       + euclidean             Euclidean distance heuristic
+#       + bad                   Bad distance estimation heuristic
 
 
 #2. Sample command:
 #   python main.py dfs
 #   python main.py bfs
-#   python main.py best euclidean
-#   python main.py A diagonal
+#   python main.py gbfs euclidean
+#   python main.py astar bad
 #   python main.py map (draw empty map)
