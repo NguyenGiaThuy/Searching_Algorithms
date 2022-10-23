@@ -1,0 +1,10 @@
+4
+3 1 -5
+3 2 -5
+3 3 -2
+1 20 -10
+xxxxxxxxxxxxxxxxxxxxxx
+xS                   x
+x                    x
+x                     
+xxxxxxxxxxxxxxxxxxxxxx
