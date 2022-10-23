@@ -7,16 +7,16 @@
        + astar                 A* search
        + algo1                 Bonus-oriented search
    - <heu_func> - heuristic function (for heuristic only)
-       + manhattan             Manhattan distance heuristic
-       + euclidean             Euclidean distance heuristic
-       + bad                   Bad distance estimation heuristic
+       + 1                     Manhattan distance heuristic
+       + 2                     Euclidean distance heuristic
+       + 3                     Bad distance estimation heuristic
      
        
 2. Sample command:
    python main.py dfs
    python main.py bfs
-   python main.py gbfs euclidean
-   python main.py astar bad
+   python main.py gbfs 2
+   python main.py astar 3
    python main.py map (draw empty map)
 
 

@@ -214,6 +214,9 @@ class Maze:
                 
                 # Act as an priority queue
                 frontier.sort(function) 
+
+        # If no END is found
+        return self.path
                 
 
     def visualize(self, sub_directory = '', file_name = ''):
@@ -271,7 +274,7 @@ class Maze:
 
         # Weight to calculate h function
         min_points = 1000000
-        triangle_vertex = (0, 0)
+        min_cluster_coordinate = self.start_coordinate
         visited_bonuses = []
 
         for bonus in self.bonuses:
@@ -305,11 +308,12 @@ class Maze:
                 # Pick bonus in the most weighted cluster
                 if total_points < min_points:
                     min_points = total_points
-                    triangle_vertex = (bonus[0], bonus[1])
+                    min_cluster_coordinate = (bonus[0], bonus[1])
 
         # Evaluate h function in consideration of distance to the most weighted cluster and exit
-        h = round(sqrt(pow(node.coordinate[0] - triangle_vertex[0], 2) + pow(node.coordinate[1] - triangle_vertex[1], 2)) + \
-            sqrt(pow(node.coordinate[0] - self.end_coordinate[0], 2) + pow(node.coordinate[1] - self.end_coordinate[1], 2)))
-
+        v1 = (min_cluster_coordinate[0] - node.coordinate[0], min_cluster_coordinate[1] - node.coordinate[1])
+        v2 = (self.end_coordinate[0] - node.coordinate[0], self.end_coordinate[1] - node.coordinate[1])
+        v3 = (v1[0] + v2[0], v1[1] + v2[1])
+        h = round(sqrt(v3[0] * v3[0] + v3[1] * v3[1]) / 2)
         return g + h
     """==================="""

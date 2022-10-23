@@ -59,16 +59,12 @@ def visualize_maze(matrix, bonuses, waypoints, start, end, path = None, visited_
 
     if visited_coordinates:
         for i in range(len(visited_coordinates)):
-            if visited_coordinates[i] not in path:
+            if visited_coordinates[i] not in path and visited_coordinates[i] != start:
                 plt.scatter(visited_coordinates[i][1], -visited_coordinates[i][0], marker = '*', color = 'silver', s = legend_size)
 
     if path:
         for i in range(len(path) - 2):
             is_overlapped = False
-            for bonus in bonuses:
-                if path[i + 1][0] == bonus[0] and path[i + 1][1] == bonus[1]:
-                    is_overlapped = True
-                    break
             
             for waypoint in waypoints:
                 if (path[i + 1][0] == waypoint[0] and path[i + 1][1] == waypoint[1]) or (path[i + 1][0] == waypoint[2] and path[i + 1][1] == waypoint[3]):

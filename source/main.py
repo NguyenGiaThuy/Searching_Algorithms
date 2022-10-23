@@ -25,20 +25,20 @@ def func(directory):
 
         elif sys.argv[1] == 'gbfs':
             heuristic = maze.Heuristic.GREEDY_BEST_FIRST_SEARCH
-            if sys.argv[2] == 'manhattan':
+            if sys.argv[2] == '1':
                 heuristic_function = m.manhattan_heuristic
-            elif sys.argv[2] == 'euclidean':
+            elif sys.argv[2] == '2':
                 heuristic_function = m.euclidean_heuristic
-            elif sys.argv[2] == 'bad':
+            elif sys.argv[2] == '3':
                 heuristic_function = m.bad_heuristic
 
         elif sys.argv[1] == 'astar':
             heuristic = maze.Heuristic.A_STAR_SEARCH
-            if sys.argv[2] == 'manhattan':
+            if sys.argv[2] == '1':
                 heuristic_function = m.manhattan_heuristic
-            elif sys.argv[2] == 'euclidean':
+            elif sys.argv[2] == '2':
                 heuristic_function = m.euclidean_heuristic
-            elif sys.argv[2] == 'bad':
+            elif sys.argv[2] == '3':
                 heuristic_function = m.bad_heuristic
 
         elif sys.argv[1] == 'algo1':
@@ -47,18 +47,16 @@ def func(directory):
 
         m.solve(algorithm, heuristic, heuristic_function)
 
-        file_name = sys.argv[1]
-        if len(sys.argv) == 3:
-            file_name += ' ' + sys.argv[2]
-
+        file_name = sys.argv[1] + '_heuristic_' + sys.argv[2]  if len(sys.argv) == 3 else sys.argv[1]
         sub_directory = directory.split('/', 1)[1]
         sub_directory = sub_directory.split('.', 1)[0]
+        sub_directory += '/' + sys.argv[1]
         m.visualize(sub_directory, file_name)
 
     #Draw empty maze
     else:
-        m.visualize()
-
+       m.visualize()
+ 
     
 
 if __name__ == '__main__':
@@ -73,6 +71,7 @@ if __name__ == '__main__':
     directories.append(draw.draw_level2_maze3())
     directories.append(draw.draw_advanced_maze1())
     directories.append(draw.draw_advanced_maze2())
+    directories.append(draw.draw_advanced_maze3())
 
     for directory in directories:
         func(directory)
@@ -88,14 +87,14 @@ if __name__ == '__main__':
 #       + astar                 A* search
 #       + algo1                 Bonus-oriented search
 #   - <heu_func> - heuristic function (for heuristic only)
-#       + manhattan             Manhattan distance heuristic
-#       + euclidean             Euclidean distance heuristic
-#       + bad                   Bad distance estimation heuristic
+#       + 1                     Manhattan distance heuristic
+#       + 2                     Euclidean distance heuristic
+#       + 3                     Bad distance estimation heuristic
 
 
 #2. Sample command:
 #   python main.py dfs
 #   python main.py bfs
-#   python main.py gbfs euclidean
-#   python main.py astar bad
+#   python main.py gbfs 2
+#   python main.py astar 3
 #   python main.py map (draw empty map)
